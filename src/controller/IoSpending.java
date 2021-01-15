@@ -24,7 +24,7 @@ public class IoSpending  {
 
     Money money = new Money();
     int n=0;
-    boolean exit= false;
+    int totalMoney=0;
     public void addPrice(){
         while (true){
             try {
@@ -39,6 +39,12 @@ public class IoSpending  {
         }
         arrayList0.add(money);
     }
+//    public void price(){
+//        for (int i = 0; i < arrayList0.size(); i++) {
+//            totalMoney+=arrayList0.get(i).getMoney();
+//        }
+//        System.out.println(totalMoney);
+//    }
     public void money(){
         Scanner scanner = new Scanner(System.in);
         do {
@@ -68,16 +74,15 @@ public class IoSpending  {
                     }
                     break;
                 case 2:
-                    int totalMoney=0;
                     for (int i = 0; i < arrayList0.size(); i++) {
                         totalMoney+=arrayList0.get(i).getMoney();
                     }
-                    System.out.println("Tổng tiền bạn có là: "+totalMoney);
+                    System.out.println("Tổng tiền bạn có là= "+totalMoney);
                     break;
                 case 0:
-                    exit=true;
+                    n=0;
             }
-        }while (!exit);
+    }while (n!=0);
     }
     public void Spending(){
         Scanner scanner = new Scanner(System.in);
@@ -209,7 +214,7 @@ public class IoSpending  {
                 System.out.println("Mời nhập lại");
             }
         arrayList.add(living);
-        IoFile.writeItem("spendfile.txt",living);
+        IoFile.writeItem("spendfile.csv",living);
 
 
     }
@@ -289,27 +294,26 @@ public class IoSpending  {
         } while (!check10);
 
         arrayList1.add(borrower);
-        IoFile.writeBorrower("borrowerfile.txt",borrower);
+        IoFile.writeBorrower("borrowerfile.csv",borrower);
 
     }
-
     public void showLiving() {
         int total=0;
+        System.out.println("Két= "+totalMoney);
         for (Living living : arrayList) {
             if (arrayList!=null){
                 if (living instanceof Living) {
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        total+=arrayList.get(i).getPrice();
-
-                    }
                     System.out.println(living.toString());
-                    System.out.println("Tổng tiền đã chi tiêu: "+total);
                 }
             }else {
                 System.out.println("Bạn chưa chi tiêu gì");
             }
-
+        }for (int i = 0; i < arrayList.size(); i++) {
+            total+=arrayList.get(i).getPrice();
         }
+        System.out.println("Tổng tiền đã chi tiêu: "+total);
+        totalMoney=totalMoney-total;
+        System.out.println("Số tiền còn lại là:"+totalMoney);
     }
 
     public void showBorrower() {
@@ -317,15 +321,16 @@ public class IoSpending  {
         for (Borrower borrower : arrayList1) {
             if (arrayList1!=null){
                 if (borrower instanceof Borrower) {
-                    for (int i = 0; i < arrayList1.size(); i++) {
-                        total+=arrayList1.get(i).getLoan();
-                    }
                     System.out.println(borrower.toString());
                 }
             }else {
                 System.out.println("Bạn chưa cho ai vay");
             }
         }
+        for (int i = 0; i < arrayList1.size(); i++) {
+            total+=arrayList1.get(i).getLoan();
+        }
+        System.out.println("Tổng tiền đã chi tiêu: "+total);
     }
 
     public void deleteItem() {
